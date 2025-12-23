@@ -1,7 +1,9 @@
 import PetList from "@/components/PetList";
 import { View, StyleSheet } from "react-native";
 
+
 export default function Index() {
+
   return (
     <View style={styles.container}>
       <PetList />

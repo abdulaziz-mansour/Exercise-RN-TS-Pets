@@ -10,27 +10,38 @@ import pets from "@/data/pets";
 import PetItem from "./PetItem";
 
 const PetList = () => {
-  const petList = pets.map((pet) => <PetItem key={pet.id} pet={pet} />);
+  const [query, setQuery] = useState("");
+  const [type, setType] = useState("")
+  const petList = pets
+  .filter((pet) => pet.name.toUpperCase().includes(query.toUpperCase()))
+  .filter((pet) => type === "All" || pet.type === type)
+  .map((pet) => <PetItem key={pet.id} pet={pet} />);
+  console.log(query);
+  console.log(type);
   return (
     <ScrollView
       contentContainerStyle={styles.container}
       style={styles.containerStyle}
     >
       {/* Search Input */}
-      <TextInput placeholder="Search for a pet" style={styles.searchInput} />
+      <TextInput placeholder="Search for a pet" style={styles.searchInput} onChangeText={setQuery}/>
 
       {/* Filter by type */}
       <ScrollView horizontal contentContainerStyle={styles.filterContainer}>
-        <TouchableOpacity style={styles.filterButton}>
+        <TouchableOpacity style={styles.filterButton} 
+        onPress={() => setType("All")}>
           <Text>All</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.filterButton}>
+        <TouchableOpacity style={styles.filterButton} 
+        onPress={() => setType("Cat")}>
           <Text>Cat</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.filterButton}>
+        <TouchableOpacity style={styles.filterButton} 
+        onPress={() => setType("Dog")}>
           <Text>Dog</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.filterButton}>
+        <TouchableOpacity style={styles.filterButton} 
+        onPress={() => setType("Rabbit")}>
           <Text>Rabbit</Text>
         </TouchableOpacity>
       </ScrollView>
